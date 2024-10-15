@@ -28,7 +28,7 @@ import * as os from 'os';
 import config from './config.cjs';
 import pkg from './lib/autoreact.cjs';
 const { emojis, doReact } = pkg;
-import myrSave from './lib/Int-Session.js'
+import myrSave from './lib/Int-Session.js';
 const sessionName = "session";
 const app = express();
 const orange = chalk.bold.hex("#FF500");
@@ -50,63 +50,26 @@ const store = makeInMemoryStore({
     logger: pino().child({
         level: 'silent',
         stream: 'store'
-    })
-});
-
-/*const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
-
-const sessionDir = path.join(__dirname, 'session');
-const credsPath = path.join(sessionDir, 'creds.json');
-
-if (!fs.existsSync(sessionDir)) {
-    fs.mkdirSync(sessionDir, { recursive: true });
-}
-*/
-/*async function downloadSessionData() {
-    if (!config.SESSION_ID) {
-        console.error('Please put your session to SESSION_ID env !!');
-        process.exit(1);
-    }
-    const sessdata = config.SESSION_ID.split("Queen-Nezuko~")[1];
-    const url = `https://pastebin.com/raw/${sessdata}`;
-    try {
-        const response = await axios.get(url);
-        const data = typeof response.data === 'string' ? response.data : JSON.stringify(response.data);
-        await fs.promises.writeFile(credsPath, data);
-        console.log("Creds json Successfully stored!!");
-    } catch (error) {
-        console.error(' Failed to download session data:', error);
-        process.exit(1);
-    }
-}
-
-if (!fs.existsSync(credsPath)) {
-    downloadSessionData();
-}*/
+    })})
+var delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 async function main() {
-  const txt = config.SESSION_ID
-
-  if (!txt) {
+  const txt = config.SESSION_ID;
+    if (!txt) {
     console.error('Environment variable not found.')
     return
   }
-
-  try {
+ try {
     await myrSave(txt)
     console.log('Creds Check completed.')
   } catch (error) {
     console.error('Error:', error)
-  }
-}
-
+  }}
 main()
-
-await delay(1000 * 10)
-
+await delay(10000);
 
 async function start() {
     try {
+        const sessionDir = './session'
         const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
         const { version, isLatest } = await fetchLatestBaileysVersion();
         console.log(`🤖 Nezuko-MD using WA v${version.join('.')}, isLatest: ${isLatest}`);
