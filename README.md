@@ -61,7 +61,7 @@
 
 ## HELPERS
 
-<a href="https://github.com/chhaseeb47"><img src="https://github.com/Loki-Xer.png?size=100" width="130" height="150"></a> | [<img src="https://github.com/ayooh-me.png?size=100" width="100" height="100">](https://github.com/Rushmaster12) 
+<a href="https://github.com/Loki-Xer"><img src="https://github.com/Loki-Xer.png?size=100" width="130" height="150"></a> | [<img src="https://github.com/ayooh-me.png?size=100" width="100" height="100">](https://github.com/Loki-Xer) 
 ---|---
 [Loki](https://github.com/Loki-Xer)  | [Ayooh](https://github.com/ayooh-me)
 SESSION | Modules, Files Helper|
