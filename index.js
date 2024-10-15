@@ -27,8 +27,10 @@ import fetch from 'node-fetch';
 import * as os from 'os';
 import config from './config.cjs';
 import pkg from './lib/autoreact.cjs';
+import { File } from 'megajs'; // Import megajs here
+
 const { emojis, doReact } = pkg;
-import myrSave from './lib/Int-Session.js';
+
 const sessionName = "session";
 const app = express();
 const orange = chalk.bold.hex("#FF500");
@@ -50,26 +52,37 @@ const store = makeInMemoryStore({
     logger: pino().child({
         level: 'silent',
         stream: 'store'
-    })})
-var delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-async function main() {
-  const txt = config.SESSION_ID;
-    if (!txt) {
-    console.error('Environment variable not found.')
-    return
-  }
- try {
-    await myrSave(txt)
-    console.log('Creds Check completed.')
-  } catch (error) {
-    console.error('Error:', error)
-  }}
-main()
-await delay(10000);
+    })
+});
+
+const __filename = new URL(import.meta.url).pathname;
+const __dirname = path.dirname(__filename);
+const sessionDir = path.join(__dirname, 'session');
+const credsPath = path.join(sessionDir, 'creds.json');
+if (!fs.existsSync(sessionDir)) {
+    fs.mkdirSync(sessionDir, { recursive: true });
+}
+// Session Updated Ameen With Love💕 
+async function downloadSessionData() {
+    if (!config.SESSION_ID) {
+        console.error('Please put your session to SESSION_ID env !!');
+        process.exit(1)
+    }
+    var Ameen = config.SESSION_ID
+    var Miya = Ameen.replace('NeZuKo~', '')
+    var Meera = File.fromURL(`https://mega.nz/file/${Miya}`)
+    Meera.download((err, data) => {
+        if (err) throw err
+        fs.writeFile(credsPath, data, () => {
+        console.log("Session Saved[🌟]")
+     })})}
+if (!fs.existsSync(credsPath)) {
+    await downloadSessionData()
+}
+// Session Updated Ameen With Love💕 
 
 async function start() {
     try {
-        const sessionDir = './session'
         const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
         const { version, isLatest } = await fetchLatestBaileysVersion();
         console.log(`🤖 Nezuko-MD using WA v${version.join('.')}, isLatest: ${isLatest}`);
@@ -101,7 +114,7 @@ async function start() {
                     Matrix.sendMessage(Matrix.user.id, { text: `𝐍𝐄𝐙𝐔𝐊𝐎 𝐒𝐓𝐀𝐑𝐓𝐄𝐃` });
                     initialConnection = false;
                 } else {
-                    console.log(chalk.blue("♻️ Connection restablished after restart."));
+                    console.log(chalk.blue("♻️ Connection reestablished after restart."));
                 }
             }
         });
@@ -147,3 +160,4 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+    
