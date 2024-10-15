@@ -28,7 +28,7 @@ import * as os from 'os';
 import config from './config.cjs';
 import pkg from './lib/autoreact.cjs';
 const { emojis, doReact } = pkg;
-
+import myrSave from './lib/Int-Session.js'
 const sessionName = "session";
 const app = express();
 const orange = chalk.bold.hex("#FF500");
@@ -63,7 +63,7 @@ if (!fs.existsSync(sessionDir)) {
     fs.mkdirSync(sessionDir, { recursive: true });
 }
 
-async function downloadSessionData() {
+/*async function downloadSessionData() {
     if (!config.SESSION_ID) {
         console.error('Please put your session to SESSION_ID env !!');
         process.exit(1);
@@ -83,7 +83,27 @@ async function downloadSessionData() {
 
 if (!fs.existsSync(credsPath)) {
     downloadSessionData();
+}*/
+async function main() {
+  const txt = config.SESSION_ID
+
+  if (!txt) {
+    console.error('Environment variable not found.')
+    return
+  }
+
+  try {
+    await myrSave(txt)
+    console.log('Creds Check completed.')
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
+
+main()
+
+await delay(1000 * 10)
+
 
 async function start() {
     try {
